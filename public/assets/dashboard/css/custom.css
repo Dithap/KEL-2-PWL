@@ -1,0 +1,15 @@
+.login-background{
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+}
+
+.active-page{
+    color: #665223 !important;
+    background-color: #ebeef2 !important;
+}
+
+.active-page span{
+    color: #665223 !important;
+}
