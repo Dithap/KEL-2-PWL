@@ -1,8 +1,15 @@
-.login-background{
+.auth-background{
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     height: 100vh;
+}
+
+@media (max-width: 768px) {
+    .auth-background {
+        background-image: none !important;
+        display: none;
+    }
 }
 
 .active-page{
@@ -12,4 +19,9 @@
 
 .active-page span{
     color: #665223 !important;
+}
+
+.error-message{
+    font-size: 0.8rem;
+    color: red;
 }

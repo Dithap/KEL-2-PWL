@@ -52,6 +52,9 @@
     <script src="{{asset('assets/dashboard/js/bundle.js?ver=3.0.3')}}"></script>
     <script src="{{asset('assets/dashboard/js/scripts.js?ver=3.0.3')}}"></script>
     <script src="{{asset('assets/dashboard/js/charts/chart-ecommerce.js?ver=3.0.3')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+    @include('partials.app.sweetalert')
 </body>
 
 </html>

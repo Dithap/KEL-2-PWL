@@ -15,4 +15,5 @@
     <link rel="stylesheet" href="{{asset('assets/dashboard/css/dashlite.css?ver=3.0.3')}}">
     <link rel="stylesheet" href="{{asset('assets/dashboard/css/custom.css')}}">
     <link id="skin-default" rel="stylesheet" href="{{asset('assets/dashboard/css/theme.css?ver=3.0.3')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
 </head>
