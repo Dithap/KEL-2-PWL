@@ -49,13 +49,13 @@
                                     <h6 class="overline-title text-primary-alt">Autentikasi</h6>
                                 </li><!-- .nk-menu-heading -->
                                 <li class="nk-menu-item">
-                                    <a href="html/pricing-table.html" class="nk-menu-link">
+                                    <a href="{{route('dashboard.users.index')}}" class="nk-menu-link {{$page === 'users' ? 'active-page' : ''}}">
                                         <span class="nk-menu-icon"><em class="icon ni ni-users"></em></span>
                                         <span class="nk-menu-text">Pengguna</span>
                                     </a>
                                 </li><!-- .nk-menu-item -->
                                 <li class="nk-menu-item">
-                                    <a href="html/gallery.html" class="nk-menu-link">
+                                    <a href="{{route('dashboard.roles.index')}}" class="nk-menu-link {{$page === 'roles' ? 'active-page' : ''}}">
                                         <span class="nk-menu-icon"><em class="icon ni ni-shield"></em></span>
                                         <span class="nk-menu-text">Hak Akses</span>
                                     </a>

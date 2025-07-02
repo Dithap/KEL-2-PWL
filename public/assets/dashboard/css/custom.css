@@ -25,3 +25,29 @@
     font-size: 0.8rem;
     color: red;
 }
+
+.blue-primary{
+    color: #4F75FF !important;
+}
+
+.blue-badge{
+    color: #FFF !important;
+    background-color: #4F75FF !important;
+    border-color: #4F75FF !important;
+}
+
+/* Menambahkan margin bawah pada Show Entries */
+.dataTables_length {
+    margin-bottom: 15px; /* Ubah nilai sesuai kebutuhan */
+}
+
+/* Menambahkan margin bawah pada Search */
+.dataTables_filter {
+    margin-bottom: 15px; /* Ubah nilai sesuai kebutuhan */
+}
+
+/* Jika ingin menambahkan padding pada input search */
+.dataTables_filter input {
+    padding-bottom: 10px; /* Tambahkan padding bawah pada input search */
+    margin-left: -0.5rem !important;
+}

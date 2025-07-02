@@ -54,6 +54,10 @@
     <script src="{{asset('assets/dashboard/js/charts/chart-ecommerce.js?ver=3.0.3')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 
+     @if (isset($datatable))
+        @include('partials.app.datatables')
+    @endif
+
     @include('partials.app.sweetalert')
 </body>
 

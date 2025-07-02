@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->unsignedBigInteger('role_id')->after('password');
-            $table->foreign('role_id')->references('id')->on('users');
+            $table->foreign('role_id')->references('id')->on('roles');
 
             $table->string('phone_number')->after('email');
+            $table->enum('status' ,['0', '1'])->after('role_id');
+            $table->softDeletes();
         });
     }
 
