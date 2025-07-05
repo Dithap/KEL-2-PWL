@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Dashboard\OverviewController;
 use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\RiwayatController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/katalog', 'katalog.index')->name('katalog');
@@ -34,6 +35,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('peminjaman', PeminjamanController::class);
     Route::get('/pengembalian', [PeminjamanController::class, 'pengembalian'])->name('peminjaman.pengembalian');
     Route::post('/peminjaman/{id}/kembalikan', [PeminjamanController::class, 'prosesPengembalian'])->name('peminjaman.kembalikan');
+
+    // Riwayat route
+    Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat');
     
     // Tambahkan route lainnya di sini
 });
