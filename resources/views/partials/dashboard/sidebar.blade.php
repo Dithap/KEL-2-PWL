@@ -40,7 +40,7 @@
                                     </a>
                                 </li><!-- .nk-menu-item -->
                                 <li class="nk-menu-item">
-                                    <a href="html/gallery.html" class="nk-menu-link">
+                                    <a href="{{ route('peminjaman.index') }}" class="nk-menu-link {{$page === 'peminjaman' ? 'active-page' : ''}}">
                                         <span class="nk-menu-icon"><em class="icon ni ni-alarm-alt"></em></span>
                                         <span class="nk-menu-text">Pinjam</span>
                                     </a>
