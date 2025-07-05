@@ -3,29 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-class AuthController extends Controller
-{
-    public function login(){
-
-        $data = [
-            'page_title' => 'Masuk'
-        ];
-
-        return view('auth.login', $data);
-    }
-}
-
-namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
     public function loginForm()
     {
-        return view('auth.login'); // Sesuai file login kamu
+        $data = [
+            'page_title' => 'Masuk'
+        ];
+        return view('auth.login', $data);
     }
 
     public function login(Request $request)
