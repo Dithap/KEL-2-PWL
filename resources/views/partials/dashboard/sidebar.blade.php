@@ -33,11 +33,25 @@
                                 <li class="nk-menu-heading">
                                     <h6 class="overline-title text-primary-alt">Master</h6>
                                 </li><!-- .nk-menu-heading -->
-                                <li class="nk-menu-item">
+                                {{-- <li class="nk-menu-item">
                                     <a href="html/pricing-table.html" class="nk-menu-link">
                                         <span class="nk-menu-icon"><em class="icon ni ni-book-read"></em></span>
                                         <span class="nk-menu-text">Buku</span>
                                     </a>
+                                </li><!-- .nk-menu-item --> --}}
+                                <li class="nk-menu-item has-sub {{in_array($page, ['book-categories', 'books']) ? 'active' : ''}}">
+                                    <a href="#" class="nk-menu-link nk-menu-toggle">
+                                        <span class="nk-menu-icon"><em class="icon ni ni-book-read"></em></span>
+                                        <span class="nk-menu-text">Katalog Buku</span>
+                                    </a>
+                                    <ul class="nk-menu-sub">
+                                        <li class="nk-menu-item">
+                                            <a href="{{route('dashboard.book.categories.index')}}" class="nk-menu-link {{$page === 'book-categories' ? 'active-page' : ''}}"><span class="nk-menu-text">Kategori</span></a>
+                                        </li>
+                                        <li class="nk-menu-item">
+                                            <a href="{{route('dashboard.books.index')}}" class="nk-menu-link {{$page === 'books' ? 'active-page' : ''}}"><span class="nk-menu-text">Buku</span></a>
+                                        </li>
+                                    </ul><!-- .nk-menu-sub -->
                                 </li><!-- .nk-menu-item -->
                                 <li class="nk-menu-item">
                                     <a href="html/gallery.html" class="nk-menu-link">

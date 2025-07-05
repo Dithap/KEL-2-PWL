@@ -5,6 +5,8 @@ use App\Http\Controllers\Dashboard\DatatableController;
 use App\Http\Controllers\Dashboard\OverviewController;
 use App\Http\Controllers\Dashboard\RoleController;
 use App\Http\Controllers\Dashboard\UserController;
+use App\Http\Controllers\Dashboard\BookCategoryController;
+use App\Http\Controllers\Dashboard\BookController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -27,6 +29,40 @@ Route::controller(AuthController::class)->group(function(){
 
 Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(function(){
     Route::get('/overview', [OverviewController::class, 'index'])->name('overview.index');
+
+    Route::prefix('book-categories')->name('book.categories.')->group(function(){
+        Route::controller(BookCategoryController::class)->group(function(){
+            Route::get('/', 'index')->name('index');
+            Route::get('/{id}/show', 'show')->name('show');
+
+            Route::get('/create', 'create')->name('create');
+            Route::post('/', 'store')->name('store');
+
+            Route::get('/{id}/edit', 'edit')->name('edit');
+            Route::put('/{id}', 'update')->name('update');
+
+            Route::delete('/{id}', 'destroy')->name('destroy');
+        });
+
+        Route::get('/data', [DatatableController::class, 'bookCategory'])->name('data');
+    });
+
+    Route::prefix('books')->name('books.')->group(function(){
+        Route::controller(BookController::class)->group(function(){
+            Route::get('/', 'index')->name('index');
+            Route::get('/{id}/show', 'show')->name('show');
+
+            Route::get('/create', 'create')->name('create');
+            Route::post('/', 'store')->name('store');
+
+            Route::get('/{id}/edit', 'edit')->name('edit');
+            Route::put('/{id}', 'update')->name('update');
+
+            Route::delete('/{id}', 'destroy')->name('destroy');
+        });
+
+        Route::get('/data', [DatatableController::class, 'book'])->name('data');
+    });
 
     Route::prefix('roles')->name('roles.')->group(function(){
         Route::controller(RoleController::class)->group(function(){
@@ -55,8 +91,6 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
             Route::put('/{id}', 'update')->name('update');
 
             Route::delete('/{id}', 'destroy')->name('destroy');
-
-            Route::post('/filter', 'filter')->name('filter');
 
             Route::get('/{id}/reset-password', 'resetPassword')->name('reset.password');
         });

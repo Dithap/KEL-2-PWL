@@ -1,5 +1,5 @@
 @include('partials.dashboard.head')
-@include('partials.dashboard.sidebar', ['page' => 'users'])
+@include('partials.dashboard.sidebar', ['page' => 'book-categories'])
 @include('partials.dashboard.header')
                 <!-- content @s -->
                 <div class="nk-content ">
@@ -16,7 +16,7 @@
                                                 <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1" data-target="pageMenu"><em class="icon ni ni-more-v"></em></a>
                                                 <div class="toggle-expand-content" data-content="pageMenu">
                                                     <ul class="nk-block-tools g-3">
-                                                        <li class="nk-block-tools-opt"><a href="{{route('dashboard.users.index')}}" class="btn btn-white btn-dim btn-outline-light"><em class="icon ni ni-arrow-left"></em><span>Kembali</span></a></li>
+                                                        <li class="nk-block-tools-opt"><a href="{{route('dashboard.book.categories.index')}}" class="btn btn-white btn-dim btn-outline-light"><em class="icon ni ni-arrow-left"></em><span>Kembali</span></a></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -28,7 +28,7 @@
                                         <div class="card-inner">
                                             <div class="preview-block">
                                                 {{-- <span class="preview-title-lg overline-title">Default Preview</span> --}}
-                                                <form action="{{route('dashboard.users.update', ['id' => encrypt_id($user->id)])}}" method="post" id="myForm">
+                                                <form action="{{route('dashboard.book.categories.update', ['id' => encrypt_id($bookCategory->id)])}}" method="post" id="myForm">
                                                     @csrf
                                                     @method('put')
                                                     <div class="row gy-4">
@@ -36,47 +36,20 @@
                                                             <div class="form-group">
                                                                 <label class="form-label required-field" for="name">Nama</label>
                                                                 <div class="form-control-wrap">
-                                                                    <input type="text" class="form-control" id="name" placeholder="Contoh: Ditha" name="name" value="{{ $user->name }}">
+                                                                    <input type="text" class="form-control" id="name" placeholder="Contoh: Psikologi" name="name" value="{{ $bookCategory->name }}">
                                                                 </div>
                                                                 @error('name')
                                                                     <span class="error-message">{{ $message }}</span>
                                                                 @enderror
                                                             </div>
                                                         </div>
-                                                        <div class="col-sm-6">
+                                                        <div class="col-sm-12">
                                                             <div class="form-group">
-                                                                <label class="form-label required-field" for="email">Email</label>
+                                                                <label class="form-label" for="description">Deskripsi</label>
                                                                 <div class="form-control-wrap">
-                                                                    <input type="text" class="form-control" id="email" placeholder="Contoh: Ditha@gmail.com" name="email" value="{{ $user->email }}">
+                                                                    <textarea class="form-control no-resize" id="description" name="description">{{ $bookCategory->description }}</textarea>
                                                                 </div>
-                                                                @error('email')
-                                                                    <span class="error-message">{{ $message }}</span>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label required-field" for="phone_number">Nomor Telepon</label>
-                                                                <div class="form-control-wrap">
-                                                                    <input type="text" class="form-control" id="phone_number" placeholder="Contoh: 0812345679" name="phone_number" value="{{ $user->phone_number }}">
-                                                                </div>
-                                                                @error('phone_number')
-                                                                    <span class="error-message">{{ $message }}</span>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label required-field">Hak Akses</label>
-                                                                <div class="form-control-wrap">
-                                                                    <select class="form-select js-select2" name="role_id">
-                                                                        <option value="placeholder" disabled {{ $user->role_id == 'placeholder' ? 'selected' : '' }}>Pilih Hak Akses</option>
-                                                                        @foreach ($roles as $item)
-                                                                        <option value="{{$item->id}}" {{ $user->role_id == $item->id ? 'selected' : '' }}>{{$item->name}}</option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-                                                                @error('role_id')
+                                                                @error('description')
                                                                     <span class="error-message">{{ $message }}</span>
                                                                 @enderror
                                                             </div>

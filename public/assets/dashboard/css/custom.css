@@ -21,6 +21,11 @@
     color: #665223 !important;
 }
 
+.required-field::after{
+    content: " *";
+    color: red;
+}
+
 .error-message{
     font-size: 0.8rem;
     color: red;

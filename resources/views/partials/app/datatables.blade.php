@@ -18,7 +18,73 @@
     };
 </script>
 
-@if ($page === 'users')
+@if ($page === 'books')
+<script>
+    $(document).ready(function() {
+        $('#bookTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: '{{ route('dashboard.books.data') }}',
+                type: 'GET',
+                data: function(d) {
+                    d.name = '{{ $name }}';
+                }
+            },
+            columns: [
+                { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+                { data: 'cover_image', name: 'cover_image' },
+                { data: 'author', name: 'title' },
+                { data: 'category', name: 'category' },
+                { data: 'quantity_total', name: 'quantity_total' },
+                { data: 'rating', name: 'rating' },
+                { data: 'year', name: 'year' },
+                { data: 'action', name: 'action', orderable: false, searchable: false },
+                { data: 'created_at', name: 'created_at', visible: false },
+                { data: 'id', name: 'id', orderable: true, searchable: false, visible: false },
+            ],
+            language: datatableLanguage,
+            responsive: true,
+            autoWidth: false,
+            order: [[8, 'desc']],
+            pagingType: "simple",
+            lengthMenu: [[10, 25, 50, 100, -1], ['Tampilkan 10 data', 'Tampilkan 25 data', 'Tampilkan 50 data', 'Tampilkan 100 data', 'Tampilkan semua']],
+            scrollX: true
+        });
+    });
+</script>
+@elseif($page === 'book-categories')
+<script>
+    $(document).ready(function() {
+        $('#bookCategoryTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: '{{ route('dashboard.book.categories.data') }}',
+                type: 'GET',
+                data: function(d) {
+                    d.name = '{{ $name }}';
+                }
+            },
+            columns: [
+                { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+                { data: 'name', name: 'name' },
+                { data: 'book_count', name: 'book_count' },
+                { data: 'action', name: 'action', orderable: false, searchable: false },
+                { data: 'created_at', name: 'created_at', visible: false },
+                { data: 'id', name: 'id', orderable: true, searchable: false, visible: false },
+            ],
+            language: datatableLanguage,
+            responsive: true,
+            autoWidth: false,
+            order: [[4, 'desc']],
+            pagingType: "simple",
+            lengthMenu: [[10, 25, 50, 100, -1], ['Tampilkan 10 data', 'Tampilkan 25 data', 'Tampilkan 50 data', 'Tampilkan 100 data', 'Tampilkan semua']],
+            scrollX: true
+        });
+    });
+</script>
+@elseif($page === 'users')
 <script>
     $(document).ready(function() {
         $('#userTable').DataTable({
