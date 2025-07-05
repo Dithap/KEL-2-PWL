@@ -41,3 +41,9 @@ Route::middleware(['auth'])->group(function () {
     
     // Tambahkan route lainnya di sini
 });
+
+Route::get('/scan-ktm', function() {
+    return view('qrcode.scan');
+})->name('qrcode.scan');
+
+Route::get('/scan-ktm/cari', [App\Http\Controllers\QrcodeController::class, 'cari'])->name('qrcode.cari');
