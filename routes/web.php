@@ -3,14 +3,25 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Dashboard\DatatableController;
 use App\Http\Controllers\Dashboard\OverviewController;
+
 use App\Http\Controllers\Dashboard\RoleController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\BookCategoryController;
 use App\Http\Controllers\Dashboard\BookController;
+use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\RiwayatController;
 use Illuminate\Support\Facades\Route;
 
+Route::view('/katalog', 'katalog.index')->name('katalog');
+Route::view('/profil', 'user.profile')->name('profil');
+Route::view('/buku-online', 'buku-online.index')->name('buku-online');
+Route::view('/laporan', 'laporan.index')->name('laporan');
+Route::view('/riwayat', 'riwayat.index')->name('riwayat');
+Route::view('/ulasan', 'ulasan.index')->name('ulasan');
+Route::view('/qrcode', 'qrcode.index')->name('qrcode');
+
 Route::get('/', function () {
-    return redirect()->route('login');
+    return redirect()->route('login.form');
 });
 
 Route::controller(AuthController::class)->group(function(){
@@ -18,6 +29,7 @@ Route::controller(AuthController::class)->group(function(){
         Route::get('/', 'login')->name('login');
         Route::post('/', 'loginAction')->name('login.action');
     });
+
 
     Route::prefix('register')->group(function(){
         Route::get('/', 'register')->name('register');
@@ -98,3 +110,24 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
         Route::get('/data', [DatatableController::class, 'user'])->name('data');
     });
 });
+
+Route::middleware(['auth'])->group(function () {
+    Route::view('/dashboard', 'dashboard.overview.index')->name('dashboard');
+    Route::view('/katalog', 'katalog.index')->name('katalog');
+
+    // Peminjaman routes
+    Route::resource('peminjaman', PeminjamanController::class);
+    Route::get('/pengembalian', [PeminjamanController::class, 'pengembalian'])->name('peminjaman.pengembalian');
+    Route::post('/peminjaman/{id}/kembalikan', [PeminjamanController::class, 'prosesPengembalian'])->name('peminjaman.kembalikan');
+
+    // Riwayat route
+    Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat');
+
+    // Tambahkan route lainnya di sini
+});
+
+Route::get('/scan-ktm', function() {
+    return view('qrcode.scan');
+})->name('qrcode.scan');
+
+Route::get('/scan-ktm/cari', [App\Http\Controllers\QrcodeController::class, 'cari'])->name('qrcode.cari');

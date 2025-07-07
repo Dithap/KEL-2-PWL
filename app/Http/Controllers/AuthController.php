@@ -10,12 +10,13 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+
     public function login(){
+
         $data = [
             'page_title' => 'Masuk',
             'page' => 'login',
         ];
-
         return view('auth.login', $data);
     }
 
