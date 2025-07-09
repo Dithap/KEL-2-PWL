@@ -36,8 +36,8 @@ class BookLoanRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'book_id' => decrypt_id($this->book_id),
-            'borrower_id' => decrypt_id($this->borrower_id),
+            'book_id' => $this->book_id ? decrypt_id($this->book_id) : '',
+            'borrower_id' => $this->borrower_id ? decrypt_id($this->borrower_id) : '',
             'enhancer_id' => Auth::check() ? Auth::id() : null,
         ]);
     }

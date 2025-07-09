@@ -21,7 +21,7 @@
                                                                 <a href="javascript: void(0);" class="btn btn-white btn-dim btn-outline-light"  data-bs-toggle="modal" data-bs-target="#modalFilter"><em class="d-none d-sm-inline icon ni ni-filter"></em><span>Filter</span></a>
                                                             </div>
                                                         </li>
-                                                        <li class="nk-block-tools-opt"><a href="{{route('dashboard.book.categories.create')}}" class="btn btn-primary"><em class="icon ni ni-plus"></em><span>Tambah</span></a></li>
+                                                        <li class="nk-block-tools-opt"><a href="{{route('dashboard.books.create')}}" class="btn btn-primary"><em class="icon ni ni-plus"></em><span>Tambah</span></a></li>
                                                     </ul>
                                                 </div>
                                             </div>
