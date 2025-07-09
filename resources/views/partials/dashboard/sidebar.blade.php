@@ -54,7 +54,7 @@
                                     </ul><!-- .nk-menu-sub -->
                                 </li><!-- .nk-menu-item -->
                                 <li class="nk-menu-item">
-                                    <a href="{{ route('peminjaman.index') }}" class="nk-menu-link {{$page === 'peminjaman' ? 'active-page' : ''}}">
+                                    <a href="{{ route('dashboard.book.loans.index') }}" class="nk-menu-link {{$page === 'book-loans' ? 'active-page' : ''}}">
                                         <span class="nk-menu-icon"><em class="icon ni ni-alarm-alt"></em></span>
                                         <span class="nk-menu-text">Pinjam</span>
                                     </a>

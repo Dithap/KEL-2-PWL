@@ -1,5 +1,5 @@
 @include('partials.dashboard.head')
-@include('partials.dashboard.sidebar', ['page' => 'book-categories'])
+@include('partials.dashboard.sidebar')
 @include('partials.dashboard.header')
                 <!-- content @s -->
                 <div class="nk-content ">

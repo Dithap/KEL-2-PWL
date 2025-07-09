@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Models\BookCategory;
+use App\Models\BookLoan;
 use App\Models\Role;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
@@ -47,7 +49,7 @@ class DatatableController extends Controller
                         }
 
                         if (is_role(['2'])) {
-                            $dropdown .= '<li><a href="javascript:void(0);" onclick="deleteItem(\''.$deleteUrl.'\', \'Apakah Anda yakin ingin menghapus pengguna '.$data->name.'? Akun pengguna dan data yang berhubungan dengannya juga akan dihapus secara permanen!\')"><em class="icon ni ni-trash"></em><span>Hapus</span></a></li>';
+                            $dropdown .= '<li><a href="javascript:void(0);" onclick="deleteItem(\''.$deleteUrl.'\', \'Apakah Anda yakin ingin menghapus kategori buku '.$data->name.'?\')"><em class="icon ni ni-trash"></em><span>Hapus</span></a></li>';
 
                         }
 
@@ -72,13 +74,6 @@ class DatatableController extends Controller
 
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('cover_image', function ($data) {
-                    $url = $data->cover_image
-                        ? asset('uploads/books/' . $data->cover_image)
-                        : asset('assets/default/default.jpg');
-
-                    return '<img src="' . $url . '" alt="Cover" style="width:50px; height:auto;">';
-                })
                 ->addColumn('category', function ($data) {
                     return $data->category->name;
                 })
@@ -114,6 +109,87 @@ class DatatableController extends Controller
                         return $dropdown;
                 })
                 ->rawColumns(['cover_image', 'action'])
+                ->make(true);
+        }
+
+        return response()->json(['error' => 'Unauthorized'], 401);
+
+    }
+
+    public function bookLoan(Request $request){
+        if ($request->ajax()) {
+
+            $data = BookLoan::with(['book', 'borrower','enhancer'])->get();
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('borrower_name', function ($data) {
+                    return $data->borrower->name;
+                })
+                ->addColumn('book_name', function ($data) {
+                    return $data->book->title;
+                })
+                ->addColumn('loan_date', function ($data) {
+                    return Carbon::parse($data->loan_date)->translatedFormat('l, d F Y');;
+                })
+                ->addColumn('due_date', function ($data) {
+                    return Carbon::parse($data->loan_date)->translatedFormat('l, d F Y');;
+                })
+                ->addColumn('status', function ($data) {
+                    switch($data->status){
+                        case 0:
+                            return '<span class="badge bg-warning" style="display:inline-block;font-size:0.8rem;">Menunggu</span>';
+                        case 1:
+                            return '<span class="badge bg-primary" style="display:inline-block;font-size:0.8rem;">Diterima</span>';
+                        case 2:
+                            return '<span class="badge bg-danger" style="display:inline-block;font-size:0.8rem;">Ditolak</span>';
+                        default:
+                            return '<span class="badge bg-secondary" style="display:inline-block;font-size:0.8rem;">Tidak Diketahui</span>';
+                    }
+                })
+                ->addColumn('loan_status', function ($data) {
+                    switch($data->loan_status){
+                        case 'waiting':
+                            return '<span class="badge bg-warning" style="display:inline-block;font-size:0.8rem;">Menunggu</span>';
+                        case 'borrowed':
+                            return '<span class="badge bg-primary" style="display:inline-block;font-size:0.8rem;">Masih Dipinjam</span>';
+                        case 'returned':
+                            return '<span class="badge bg-success" style="display:inline-block;font-size:0.8rem;">Sudah Dikembalikan</span>';
+                        case 'late':
+                            return '<span class="badge bg-danger" style="display:inline-block;font-size:0.8rem;">Terlambat Mengembalikan</span>';
+                        default:
+                            return '<span class="badge bg-secondary" style="display:inline-block;font-size:0.8rem;">Tidak Diketahui</span>';
+                    }
+                })
+                ->addColumn('action', function ($data) {
+                    $showUrl = route('dashboard.book.loans.show', ['id' => encrypt_id($data->id)]);
+
+                    $editUrl = route('dashboard.book.loans.edit', ['id' => encrypt_id($data->id)]);
+
+                    $deleteUrl = route('dashboard.book.loans.destroy', ['id' => encrypt_id($data->id)]);
+
+                    $dropdown = '<div class="dropdown" style="display:flex; justify-content:center;">
+                                        <a class="dropdown-toggle btn btn-icon btn-light" data-bs-toggle="dropdown"><em class="icon ni ni-more-v"></em></a>
+                                        <div class="dropdown-menu dropdown-menu-datatable-custom dropdown-menu-end">
+                                            <ul class="link-list-opt">
+                                                <li><a href="'.$showUrl.'"><em class="icon ni ni-eye"></em><span>Detail</span></a></li>';
+
+                        if (is_role(['2'])) {
+                            $dropdown .= '<li><a href="'.$editUrl.'"><em class="icon ni ni-edit"></em><span>Ubah</span></a></li>';
+                        }
+
+                        if (is_role(['2'])) {
+                            $dropdown .= '<li><a href="javascript:void(0);" onclick="deleteItem(\''.$deleteUrl.'\', \'Apakah Anda yakin ingin menghapus peminjaman buku '.$data->book->title.' oleh '.$data->borrower->name.'?\')"><em class="icon ni ni-trash"></em><span>Hapus</span></a></li>';
+
+                        }
+
+                        $dropdown .= '</ul>
+                                    </div>
+                                </div>';
+
+                        return $dropdown;
+                })
+                ->rawColumns(['status', 'loan_status','action'])
                 ->make(true);
         }
 

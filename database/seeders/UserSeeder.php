@@ -21,5 +21,15 @@ class UserSeeder extends Seeder
             'status' => '1',
             'password' => 'Rahasia123@',
         ]);
+
+        User::create([
+            'name' => 'Ditha Indika Putri',
+            'nim' => '241351080',
+            'email' => 'ditha@gmail.com',
+            'phone_number' => '08123456789',
+            'role_id' => 1,
+            'status' => '1',
+            'password' => 'Rahasia123@',
+        ]);
     }
 }

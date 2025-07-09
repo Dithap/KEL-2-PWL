@@ -28,7 +28,7 @@ class BookCategoryController extends Controller
         $validatedData = $bookCategoryRequest->validated();
         BookCategory::create($validatedData);
 
-        return redirect()->route('dashboard.book.categories.index')->with('success-message', 'Berhasil menambahkan pengguna');
+        return redirect()->route('dashboard.book.categories.index')->with('success-message', 'Berhasil menambahkan kategori buku.');
     }
 
     public function edit($id){
@@ -46,7 +46,7 @@ class BookCategoryController extends Controller
         $bookCategory = BookCategory::findOrFail(decrypt_id($id));
 
         $bookCategory->update($validatedData);
-        return redirect()->route('dashboard.book.categories.show', ['id' => $id])->with('success-message', 'Berhasil mengubah pengguna');
+        return redirect()->route('dashboard.book.categories.show', ['id' => $id])->with('success-message', 'Berhasil mengubah kategori buku.');
     }
 
     public function show($id){
@@ -58,9 +58,9 @@ class BookCategoryController extends Controller
             $bookCategory = BookCategory::findOrFail(decrypt_id($id));
             $bookCategory->delete();
 
-            return response()->json(['message' => 'Berhasil menghapus pengguna.']);
+            return response()->json(['message' => 'Berhasil menghapus kategori buku.']);
         }catch (\Exception $e) {
-            return response()->json(['message' => 'Gagal menghapus pengguna.'], 500);
+            return response()->json(['message' => 'Gagal menghapus kategori buku.'], 500);
         }
     }
 }

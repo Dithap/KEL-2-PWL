@@ -8,6 +8,7 @@ use App\Http\Controllers\Dashboard\RoleController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\BookCategoryController;
 use App\Http\Controllers\Dashboard\BookController;
+use App\Http\Controllers\Dashboard\BookLoanController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\RiwayatController;
 use Illuminate\Support\Facades\Route;
@@ -21,7 +22,7 @@ Route::view('/ulasan', 'ulasan.index')->name('ulasan');
 Route::view('/qrcode', 'qrcode.index')->name('qrcode');
 
 Route::get('/', function () {
-    return redirect()->route('login.form');
+    return redirect()->route('login');
 });
 
 Route::controller(AuthController::class)->group(function(){
@@ -76,6 +77,23 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
         Route::get('/data', [DatatableController::class, 'book'])->name('data');
     });
 
+    Route::prefix('book-loans')->name('book.loans.')->group(function(){
+        Route::controller(BookLoanController::class)->group(function(){
+            Route::get('/', 'index')->name('index');
+            Route::get('/{id}/show', 'show')->name('show');
+
+            Route::get('/create', 'create')->name('create');
+            Route::post('/', 'store')->name('store');
+
+            Route::get('/{id}/edit', 'edit')->name('edit');
+            Route::put('/{id}', 'update')->name('update');
+
+            Route::delete('/{id}', 'destroy')->name('destroy');
+        });
+
+        Route::get('/data', [DatatableController::class, 'bookLoan'])->name('data');
+    });
+
     Route::prefix('roles')->name('roles.')->group(function(){
         Route::controller(RoleController::class)->group(function(){
             Route::get('/', 'index')->name('index');
@@ -116,9 +134,9 @@ Route::middleware(['auth'])->group(function () {
     Route::view('/katalog', 'katalog.index')->name('katalog');
 
     // Peminjaman routes
-    Route::resource('peminjaman', PeminjamanController::class);
-    Route::get('/pengembalian', [PeminjamanController::class, 'pengembalian'])->name('peminjaman.pengembalian');
-    Route::post('/peminjaman/{id}/kembalikan', [PeminjamanController::class, 'prosesPengembalian'])->name('peminjaman.kembalikan');
+    // Route::resource('peminjaman', PeminjamanController::class);
+    // Route::get('/pengembalian', [PeminjamanController::class, 'pengembalian'])->name('peminjaman.pengembalian');
+    // Route::post('/peminjaman/{id}/kembalikan', [PeminjamanController::class, 'prosesPengembalian'])->name('peminjaman.kembalikan');
 
     // Riwayat route
     Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat');
