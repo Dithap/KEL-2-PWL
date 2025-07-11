@@ -47,13 +47,15 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
             Route::get('/', 'index')->name('index');
             Route::get('/{id}/show', 'show')->name('show');
 
-            Route::get('/create', 'create')->name('create');
-            Route::post('/', 'store')->name('store');
+            Route::middleware('role:2')->group(function(){
+                Route::get('/create', 'create')->name('create');
+                Route::post('/', 'store')->name('store');
 
-            Route::get('/{id}/edit', 'edit')->name('edit');
-            Route::put('/{id}', 'update')->name('update');
+                Route::get('/{id}/edit', 'edit')->name('edit');
+                Route::put('/{id}', 'update')->name('update');
 
-            Route::delete('/{id}', 'destroy')->name('destroy');
+                Route::delete('/{id}', 'destroy')->name('destroy');
+            });
         });
 
         Route::get('/data', [DatatableController::class, 'bookCategory'])->name('data');
@@ -64,13 +66,15 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
             Route::get('/', 'index')->name('index');
             Route::get('/{id}/show', 'show')->name('show');
 
-            Route::get('/create', 'create')->name('create');
-            Route::post('/', 'store')->name('store');
+            Route::middleware('role:2')->group(function(){
+                Route::get('/create', 'create')->name('create');
+                Route::post('/', 'store')->name('store');
 
-            Route::get('/{id}/edit', 'edit')->name('edit');
-            Route::put('/{id}', 'update')->name('update');
+                Route::get('/{id}/edit', 'edit')->name('edit');
+                Route::put('/{id}', 'update')->name('update');
 
-            Route::delete('/{id}', 'destroy')->name('destroy');
+                Route::delete('/{id}', 'destroy')->name('destroy');
+            });
         });
 
         Route::get('/data', [DatatableController::class, 'book'])->name('data');
@@ -81,8 +85,11 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
             Route::get('/', 'index')->name('index');
             Route::get('/{id}/show', 'show')->name('show');
 
-            Route::get('/{id}/process', 'process')->name('process');
-            Route::get('/process/{id}/{action}', 'processAction')->name('process.action');
+            // Route::middleware('role:2')->group(function(){});
+            Route::middleware('role:2')->group(function(){
+                Route::get('/{id}/process', 'process')->name('process');
+                Route::get('/process/{id}/{action}', 'processAction')->name('process.action');
+            });
 
             Route::get('/create', 'create')->name('create');
             Route::post('/', 'store')->name('store');
@@ -97,7 +104,7 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
         Route::get('/data', [DatatableController::class, 'bookLoan'])->name('data');
     });
 
-    Route::prefix('roles')->name('roles.')->group(function(){
+    Route::prefix('roles')->name('roles.')->middleware('role:2')->group(function(){
         Route::controller(RoleController::class)->group(function(){
             Route::get('/', 'index')->name('index');
             Route::get('/{id}/show', 'show')->name('show');
@@ -112,7 +119,7 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
         Route::get('/data', [DatatableController::class, 'role'])->name('data');
     });
 
-    Route::prefix('users')->name('users.')->group(function(){
+    Route::prefix('users')->name('users.')->middleware('role:2')->group(function(){
         Route::controller(UserController::class)->group(function(){
             Route::get('/', 'index')->name('index');
             Route::get('/{id}/show', 'show')->name('show');

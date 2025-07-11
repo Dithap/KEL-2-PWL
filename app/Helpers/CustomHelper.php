@@ -124,3 +124,10 @@ if (!function_exists('shorten_text')) {
         return $text;
     }
 }
+
+if (!function_exists('idn_date')) {
+    function idn_date($tanggal, $format = 'd F Y')
+    {
+        return Carbon::parse($tanggal)->locale('id')->translatedFormat($format);
+    }
+}

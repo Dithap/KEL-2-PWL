@@ -65,10 +65,11 @@
                                 <li class="nk-menu-item">
                                     <a href="{{ route('dashboard.book.loans.index') }}" class="nk-menu-link {{$page === 'book-loans' ? 'active-page' : ''}}">
                                         <span class="nk-menu-icon"><em class="icon ni ni-alarm-alt"></em></span>
-                                        <span class="nk-menu-text">Pinjam</span>
+                                        <span class="nk-menu-text">Pinjam Buku</span>
                                     </a>
                                 </li><!-- .nk-menu-item -->
-                                <li class="nk-menu-heading">
+                                @if (is_role(['2']))
+                                    <li class="nk-menu-heading">
                                     <h6 class="overline-title text-primary-alt">Autentikasi</h6>
                                 </li><!-- .nk-menu-heading -->
                                 <li class="nk-menu-item">
@@ -83,6 +84,7 @@
                                         <span class="nk-menu-text">Hak Akses</span>
                                     </a>
                                 </li><!-- .nk-menu-item -->
+                                @endif
                             </ul><!-- .nk-menu -->
                         </div><!-- .nk-sidebar-menu -->
                     </div><!-- .nk-sidebar-content -->
