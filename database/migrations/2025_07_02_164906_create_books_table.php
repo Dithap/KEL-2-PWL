@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('cover_image')->nullable();
             $table->integer('quantity_total')->default(0);
+            $table->integer('viewers')->default(0);
             $table->unsignedBigInteger('enhancer_id')->nullable();
             $table->timestamps();
             $table->softDeletes();

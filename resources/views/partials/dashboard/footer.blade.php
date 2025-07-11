@@ -54,8 +54,14 @@
     <script src="{{asset('assets/dashboard/js/charts/chart-ecommerce.js?ver=3.0.3')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 
-     @if (isset($datatable))
+     @if (isset($datatable) && $datatable)
         @include('partials.app.datatables')
+    @endif
+
+    @if (isset($rich_editor))
+    <link rel="stylesheet" href="{{asset('assets/dashboard/css/editors/tinymce.css?ver=3.0.3')}}">
+    <script src="{{asset('assets/dashboard/js/libs/editors/tinymce.js?ver=3.0.3')}}"></script>
+    <script src="{{asset('assets/dashboard/js/editors.js?ver=3.0.3')}}"></script>
     @endif
 
     @include('partials.app.sweetalert')

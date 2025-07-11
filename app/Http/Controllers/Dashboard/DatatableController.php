@@ -83,9 +83,9 @@ class DatatableController extends Controller
                 ->addColumn('action', function ($data) {
                     $showUrl = route('dashboard.users.show', ['id' => encrypt_id($data->id)]);
 
-                    $editUrl = route('dashboard.book.categories.edit', ['id' => encrypt_id($data->id)]);
+                    $editUrl = route('dashboard.books.edit', ['id' => encrypt_id($data->id)]);
 
-                    $deleteUrl = route('dashboard.book.categories.destroy', ['id' => encrypt_id($data->id)]);
+                    $deleteUrl = route('dashboard.books.destroy', ['id' => encrypt_id($data->id)]);
 
                     $dropdown = '<div class="dropdown" style="display:flex; justify-content:center;">
                                         <a class="dropdown-toggle btn btn-icon btn-light" data-bs-toggle="dropdown"><em class="icon ni ni-more-v"></em></a>
@@ -166,6 +166,8 @@ class DatatableController extends Controller
 
                     $editUrl = route('dashboard.book.loans.edit', ['id' => encrypt_id($data->id)]);
 
+                    $processUrl = route('dashboard.book.loans.process', ['id' => encrypt_id($data->id)]);
+
                     $deleteUrl = route('dashboard.book.loans.destroy', ['id' => encrypt_id($data->id)]);
 
                     $dropdown = '<div class="dropdown" style="display:flex; justify-content:center;">
@@ -176,6 +178,10 @@ class DatatableController extends Controller
 
                         if (is_role(['2'])) {
                             $dropdown .= '<li><a href="'.$editUrl.'"><em class="icon ni ni-edit"></em><span>Ubah</span></a></li>';
+                        }
+
+                        if (is_role(['2'])) {
+                            $dropdown .= '<li><a href="'.$processUrl.'"><em class="icon ni ni-loader"></em><span>Proses</span></a></li>';
                         }
 
                         if (is_role(['2'])) {

@@ -96,10 +96,7 @@
                                 </div>
                             </div><!-- .nk-block --> --}}
                         </div><!-- .nk-split-content -->
-                        <div class="nk-split-content nk-split-stretch auth-background" style="background-image: url('{{ asset('assets/global/book-shelf-2.jpg') }}');">
-
-                            {{-- <img src="{{asset('assets/global/book-shelf-2.jpg')}}" style="height: ;"> --}}
-                        </div><!-- .nk-split-content -->
+                        <div class="nk-split-content nk-split-stretch bg-abstract"></div><!-- nk-split-content -->
                     </div><!-- .nk-split -->
                 </div>
                 <!-- wrap @e -->

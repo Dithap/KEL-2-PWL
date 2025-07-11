@@ -21,7 +21,9 @@
                                                                 <a href="javascript: void(0);" class="btn btn-white btn-dim btn-outline-light"  data-bs-toggle="modal" data-bs-target="#modalFilter"><em class="d-none d-sm-inline icon ni ni-filter"></em><span>Filter</span></a>
                                                             </div>
                                                         </li>
-                                                        <li class="nk-block-tools-opt"><a href="{{route('dashboard.book.categories.create')}}" class="btn btn-primary"><em class="icon ni ni-plus"></em><span>Tambah</span></a></li>
+                                                        @if (is_role(['2']))
+                                                            <li class="nk-block-tools-opt"><a href="{{route('dashboard.book.categories.create')}}" class="btn btn-primary"><em class="icon ni ni-plus"></em><span>Tambah</span></a></li>
+                                                        @endif
                                                     </ul>
                                                 </div>
                                             </div>
@@ -38,7 +40,9 @@
                                                             <th style="width: 10% !important;">No</th>
                                                             <th>Nama</th>
                                                             <th>Buku</th>
-                                                            <th style="width: 10% !important;"></th>
+                                                            @if (is_role(['2']))
+                                                                <th style="width: 10% !important;"></th>
+                                                            @endif
                                                         </tr>
                                                     </thead>
                                                 </table>

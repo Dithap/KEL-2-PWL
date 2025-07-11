@@ -41,74 +41,32 @@
                                                     @csrf
                                                     <div class="row gy-4">
                                                         <div class="col-sm-6">
-                                                            @if (!$isParamHaveBook)
-                                                            <div class="form-group">
-                                                                <label class="form-label required-field">Buku</label>
-                                                                <div class="form-control-wrap">
-                                                                    <select class="form-select js-select2" data-search="on" name="book_id">
-                                                                        <option value="placeholder" selected disabled>Pilih Buku</option>
-                                                                        @foreach ($books as $book)
-                                                                        @if ($book->quantity_total > 0)
-                                                                            <option value="{{ encrypt_id($book->id) }}" @selected(old('book_id') && $book->id === decrypt_id(old('book_id')))>{{ $book->title }}</option>
-                                                                        @endif
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-                                                                @error('book_id')
-                                                                    <span class="error-message">{{ $message }}</span>
-                                                                @enderror
-                                                            </div>
-                                                            @else
                                                             <div class="form-group">
                                                                 <label class="form-label required-field" for="book_id">Buku</label>
                                                                 <div class="form-control-wrap">
-                                                                    <input type="text" class="form-control" id="book_name" name="book_name" value="{{ $book->title }}" readonly>
-                                                                    <input type="hidden" class="form-control" id="book_id" name="book_id" value="{{ encrypt_id($book->id) }}">
+                                                                    <input type="text" class="form-control" id="book_name" name="book_name" value="{{ $bookLoan->book->title }}" readonly>
                                                                 </div>
                                                                 @error('book_id')
                                                                     <span class="error-message">{{ $message }}</span>
                                                                 @enderror
                                                             </div>
-                                                            @endif
                                                         </div>
                                                         <div class="col-sm-6">
-                                                            @if (!$isParamHaveBook && is_role('2'))
-                                                            <div class="form-group">
-                                                                <label class="form-label required-field">Peminjam</label>
-                                                                <div class="form-control-wrap">
-                                                                    <select class="form-select js-select2" data-search="on" name="borrower_id">
-                                                                        <option value="placeholder" selected disabled>Pilih Peminjam</option>
-                                                                        @foreach ($borrowers as $borrower)
-                                                                        <option value="{{ encrypt_id($borrower->id) }}" @selected(old('borrower_id') && $borrower->id === decrypt_id(old('borrower_id')))>{{ $borrower->name }}</option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-                                                                @error('borrower_id')
-                                                                    <span class="error-message">{{ $message }}</span>
-                                                                @enderror
-                                                            </div>
-                                                            @elseif($isParamHaveBook || is_role(['1']))
                                                             <div class="form-group">
                                                                 <label class="form-label required-field" for="book_id">Peminjam</label>
                                                                 <div class="form-control-wrap">
-                                                                    <input type="text" class="form-control" id="borrower" name="borrower" value="{{ Auth::user()->name }}" readonly>
-                                                                    <input type="hidden" class="form-control" id="borrower_id" name="borrower_id" value="{{ encrypt_id(Auth::user()->id) }}">
+                                                                    <input type="text" class="form-control" id="borrower" name="borrower" value="{{ $bookLoan->borrower->name }}" readonly>
                                                                 </div>
                                                                 @error('borrower_id')
                                                                     <span class="error-message">{{ $message }}</span>
                                                                 @enderror
                                                             </div>
-                                                            @endif
                                                         </div>
                                                         <div class="col-sm-6">
                                                             <div class="form-group">
                                                                 <label class="form-label required-field">Tanggal Pinjam</label>
                                                                 <div class="form-control-wrap">
-                                                                    @if (!$isParamHaveBook && is_role(['2']))
-                                                                        <input type="date" class="form-control" name="loan_date" value="{{old('loan_date')}}">
-                                                                    @else
-                                                                    <input type="date" class="form-control" name="loan_date" value="{{date('Y-m-d')}}" readonly>
-                                                                    @endif
+                                                                    <input type="date" class="form-control" name="loan_date" value="{{$bookLoan->loan_date}}" readonly>
                                                                 </div>
                                                             </div>
                                                             @error('loan_date')
@@ -119,35 +77,29 @@
                                                             <div class="form-group">
                                                                 <label class="form-label required-field">Tanggal Wajib Dikembalikan</label>
                                                                 <div class="form-control-wrap">
-                                                                    @if (!$isParamHaveBook && is_role(['2']))
-                                                                    <input type="date" class="form-control" name="due_date" value="{{old('due_date')}}">
-                                                                    @else
-                                                                    <input type="date" class="form-control" name="due_date" value="{{now()->addDays(7)->format('Y-m-d')}}" readonly>
-                                                                    @endif
+                                                                    <input type="date" class="form-control" name="due_date" value="{{$bookLoan->due_date}}" readonly>
                                                                 </div>
                                                             </div>
                                                             @error('due_date')
                                                                     <span class="error-message">{{ $message }}</span>
                                                                 @enderror
                                                         </div>
-                                                        @if (!$isParamHaveBook && is_role(['2']))
                                                         <div class="col-sm-6">
                                                             <div class="form-group">
-                                                                <label class="form-label required-field" for="fine_amount">Denda Keterlambatan</label>
+                                                                <label class="form-label required-field" for="fine_amount">Denda Keterlambatan Perhari</label>
                                                                 <div class="form-control-wrap">
-                                                                    <input type="number" class="form-control" id="fine_amount" placeholder="Contoh: 12000" name="fine_amount" value="{{ old('fine_amount') }}">
+                                                                    <input type="number" class="form-control" id="fine_amount" placeholder="Contoh: 12000" name="fine_amount" value="{{ $bookLoan->fine_amount }}">
                                                                 </div>
                                                                 @error('fine_amount')
                                                                     <span class="error-message">{{ $message }}</span>
                                                                 @enderror
                                                             </div>
                                                         </div>
-                                                        @endif
                                                         <div class="col-sm-12">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="notes">Catatan</label>
                                                                 <div class="form-control-wrap">
-                                                                    <textarea class="form-control no-resize" id="notes" name="notes">{{ old('notes') }}</textarea>
+                                                                    <textarea class="form-control no-resize" id="notes" name="notes" readonly>{{ $bookLoan->notes }}</textarea>
                                                                 </div>
                                                                 @error('notes')
                                                                     <span class="error-message">{{ $message }}</span>
@@ -155,7 +107,12 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-12 text-end mt-5">
-                                                            <button type="submit" class="btn btn-md btn-primary" id="submitButton">Tambah</button>
+                                                            <a href="javascript:void(0);" class="btn btn-success mx-1" onclick="statusAction('{{route('dashboard.book.loans.process.action', ['id' => encrypt_id($bookLoan->id), 'action' => 'accept'])}}', 'Apakah Anda yakin ingin menyetujui peminjaman buku {{$bookLoan->book->title}}?', 'Ya, Setujui')">
+                                                                Terima
+                                                            </a>
+                                                            <a href="javascript:void(0);" class="btn btn-danger mx-1" onclick="statusAction('{{route('dashboard.book.loans.process.action', ['id' => encrypt_id($bookLoan->id), 'action' => 'reject'])}}', 'Apakah Anda yakin ingin menolak peminjaman buku {{$bookLoan->book->title}}?', 'Ya, Setujui')">
+                                                                Terima
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </form>

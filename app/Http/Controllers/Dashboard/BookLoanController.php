@@ -17,21 +17,45 @@ class BookLoanController extends Controller
             'page_title' => 'Peminjaman Buku',
             'page' => 'book-loans',
             'name' => $request->input('name', null),
+            'category' => $request->input('category', null),
+            'year' => $request->input('year', null),
+            'author' => $request->input('author', null),
+            'publisher' => $request->input('publisher', null),
+            'rating' => $request->input('rating', null),
         ]);
     }
 
-    public function create(){
-        return view('dashboard.book-loans.create', [
+    public function create(Request $request){
+
+        $encryptedBookId = $request->input('book', null);
+
+        $data = [
             'page_title' => 'Tambah Peminjam Buku',
             'page' => 'book-loans',
             'books' => Book::all(),
             'borrowers' => User::where('role_id', '=', '1')->get(),
-        ]);
+            'isParamHaveBook' => false
+        ];
+
+        if($encryptedBookId){
+            $book = Book::with(['category', 'enhancer'])->findOrFail(decrypt_id($encryptedBookId));
+            $data['book'] = $book;
+            $data['isParamHaveBook'] = true;
+
+            if($book->quantity_total > 0){
+                $book->decrement('quantity_total');
+            }else{
+                return redirect()->back()->with('warning-message', 'Buku sedang tidak tersedia.');
+            }
+        }
+
+        return view('dashboard.book-loans.create', $data);
     }
 
     public function store(BookLoanRequest $bookLoanRequest){
         $validatedData = $bookLoanRequest->validated();
         $validatedData['status']  = Auth::user()->role_id == '2' ? '1' : '0';
+        $validatedData['loan_status']  = Auth::user()->role_id == '2' ? 'borrowed' : 'waiting';
 
         BookLoan::create($validatedData);
 
@@ -64,6 +88,51 @@ class BookLoanController extends Controller
         $bookLoan->update($validatedData);
 
         return redirect()->route('dashboard.book.loans.index')->with('success-message', 'Berhasil mengubah data peminjaman buku.');
+
+    }
+
+    public function process($id){
+        $bookLoan = BookLoan::with(['borrower', 'book', 'enhancer'])->findOrFail(decrypt_id($id));
+
+        return view('dashboard.book-loans.process', [
+            'page_title' => 'Ubah Peminjam Buku',
+            'bookLoan' => $bookLoan,
+            'page' => 'book-loans',
+        ]);
+    }
+
+    public function processAction(Request $request, $id, $action){
+        $bookLoan = BookLoan::with(['borrower', 'book', 'enhancer'])->findOrFail(decrypt_id($id));
+
+        if(!in_array($action, ['accept', 'reject'])){
+            abort(404);
+        }
+
+        if(!($bookLoan->fine_amount > 0)){
+            return response()->json([
+                'message' => 'Denda keterlambatan wajib diisi.'
+            ], 422); // atau 400 tergantung konteksnya
+        }
+
+        switch($action){
+            case 'accept':
+                $bookLoan->update([
+                    'status' => '1',
+                    'loan_status' => 'borrowed'
+                ]);
+
+                $bookLoan->decrement('quantity_total', 1);
+                break;
+            case 'reject':
+                $bookLoan->update([
+                    'status' => '2',
+                ]);
+                break;
+            default:
+                abort(404);
+        }
+
+        return redirect()->route('dashboard.book.loans.index')->with('success-message', 'Berhasil memproses permohonan peminjaman buku.');
 
     }
 

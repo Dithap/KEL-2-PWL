@@ -22,6 +22,7 @@ class Book extends Model
         'description',
         'cover_image',
         'quantity_total',
+        'viewers',
         'enhancer_id',
     ];
 

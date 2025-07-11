@@ -104,3 +104,23 @@ if (! function_exists('is_file_exists')) {
         return File::exists(public_path('storage/' . $path));
     }
 }
+
+if (! function_exists('titlefy')) {
+    function titlefy($text) {
+        if(filled($text)){
+            return Str::title($text);
+        }else{
+            return false;
+        }
+    }
+}
+
+if (!function_exists('shorten_text')) {
+    function shorten_text($text, $maxLength = 100) {
+        if (strlen($text) > $maxLength) {
+            return substr($text, 0, $maxLength) . '...';
+        }
+
+        return $text;
+    }
+}

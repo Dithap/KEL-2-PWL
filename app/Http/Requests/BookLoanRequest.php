@@ -27,7 +27,7 @@ class BookLoanRequest extends FormRequest
             'borrower_id' => ['required'],
             'loan_date' => ['required', 'date'],
             'due_date' => ['required', 'date'],
-            'fine_amount' => ['required'],
+            'fine_amount' => ['nullable'],
             'notes' => ['nullable'],
             'enhancer_id' => ['required'],
         ];

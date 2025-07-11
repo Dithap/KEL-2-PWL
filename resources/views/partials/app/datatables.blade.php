@@ -53,7 +53,8 @@
     });
 </script>
 @elseif($page === 'book-categories')
-<script>
+@if (is_role(['2']))
+    <script>
     $(document).ready(function() {
         $('#bookCategoryTable').DataTable({
             processing: true,
@@ -83,6 +84,37 @@
         });
     });
 </script>
+@else
+<script>
+    $(document).ready(function() {
+        $('#bookCategoryTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: '{{ route('dashboard.book.categories.data') }}',
+                type: 'GET',
+                data: function(d) {
+                    d.name = '{{ $name }}';
+                }
+            },
+            columns: [
+                { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+                { data: 'name', name: 'name' },
+                { data: 'book_count', name: 'book_count' },
+                { data: 'created_at', name: 'created_at', visible: false },
+                { data: 'id', name: 'id', orderable: true, searchable: false, visible: false },
+            ],
+            language: datatableLanguage,
+            responsive: true,
+            autoWidth: false,
+            order: [[3, 'desc']],
+            pagingType: "simple",
+            lengthMenu: [[10, 25, 50, 100, -1], ['Tampilkan 10 data', 'Tampilkan 25 data', 'Tampilkan 50 data', 'Tampilkan 100 data', 'Tampilkan semua']],
+            scrollX: true
+        });
+    });
+</script>
+@endif
 @elseif ($page === 'book-loans')
 <script>
     $(document).ready(function() {

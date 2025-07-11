@@ -86,6 +86,62 @@ $('#submitButton').click(function(e) {
 });
 
 </script>
+<script>
+    $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    });
+
+    function statusAction(url, message, confirmButtonAction) {
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: message,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: confirmButtonAction,
+            cancelButtonText: 'Batal',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    success: function(response) {
+                        $('#usersTable').DataTable().ajax.reload();
+                        Swal.fire(
+                            'Proses Berhasil!',
+                            response.message,
+                            'success'
+                        ).then(() => {
+                            location.reload();
+                        });
+                    },
+                    error: function(xhr) {
+                        let message = "Terjadi kesalahan pada server.";
+                        try {
+                            let response = JSON.parse(xhr.responseText);
+                            message = response.message || message;
+                        } catch (e) {
+                            console.error("Gagal parsing JSON error:", e);
+                        }
+
+                        Swal.fire(
+                            'Terjadi kesalahan!',
+                            message,
+                            'error'
+                        );
+                    }
+                });
+            }
+        });
+
+    }
+</script>
 
 @if (session('success-message'))
 <script>

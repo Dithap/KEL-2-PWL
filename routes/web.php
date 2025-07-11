@@ -82,11 +82,15 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
             Route::get('/', 'index')->name('index');
             Route::get('/{id}/show', 'show')->name('show');
 
+            Route::get('/{id}/process', 'process')->name('process');
+            Route::get('/process/{id}/{action}', 'processAction')->name('process.action');
+
             Route::get('/create', 'create')->name('create');
             Route::post('/', 'store')->name('store');
 
             Route::get('/{id}/edit', 'edit')->name('edit');
             Route::put('/{id}', 'update')->name('update');
+
 
             Route::delete('/{id}', 'destroy')->name('destroy');
         });

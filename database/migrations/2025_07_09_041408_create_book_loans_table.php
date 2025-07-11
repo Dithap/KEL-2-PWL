@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('return_date')->nullable();
             $table->enum('status', ['0', '1', '2'])->default('0');
             $table->enum('loan_status', ['waiting', 'borrowed', 'returned', 'late'])->default('waiting');
-            $table->integer('fine_amount')->default(0);
+            $table->integer('fine_amount')->default(1500);
             $table->text('notes')->nullable();
             $table->unsignedBigInteger('enhancer_id');
             $table->foreign('book_id')->references('id')->on('books');

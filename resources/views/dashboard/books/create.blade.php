@@ -149,13 +149,13 @@
                                                         </div>
                                                         <div class="col-sm-12">
                                                             <div class="form-group">
-                                                                <label class="form-label" for="description">Deskripsi</label>
-                                                                <div class="form-control-wrap">
-                                                                    <textarea class="form-control no-resize" id="description" name="description">{{ old('description') }}</textarea>
-                                                                </div>
+                                                                <label class="form-label required-field">Deskripsi</label>
                                                                 @error('description')
-                                                                    <span class="error-message">{{ $message }}</span>
+                                                                <span class="validation-error">{{$message}}</span>
                                                                 @enderror
+                                                                <div class="form-control-wrap">
+                                                                    <textarea class="tinymce-basic form-control" name="description">{!!old('description')!!}</textarea>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-12 text-end mt-5">
@@ -172,4 +172,4 @@
                     </div>
                 </div>
                 <!-- content @e -->
-@include('partials.dashboard.footer')
+@include('partials.dashboard.footer', ['rich_editor' => true])
