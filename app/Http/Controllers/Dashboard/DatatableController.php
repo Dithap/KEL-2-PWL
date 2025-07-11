@@ -26,7 +26,7 @@ class DatatableController extends Controller
                     $bookCount =  $data->books->count();
 
                     if($bookCount > 0){
-                        return $bookCount. ' [<a href="'.route('dashboard.books.index', ['category' => encrypt_id($data->slug)]).'" class="blue-primary">Lihat</a>]';
+                        return $bookCount. ' [<a href="'.route('dashboard.books.index', ['category' => encrypt_id($data->id)]).'" class="blue-primary">Lihat</a>]';
                     }else{
                         return $bookCount;
                     }
@@ -70,7 +70,15 @@ class DatatableController extends Controller
     public function book(Request $request){
         if ($request->ajax()) {
 
-            $data = Book::with(['category'])->get();
+            $category = $request->input('category', null);
+
+            $book = Book::with(['category']);
+
+            if($category){
+                $book->where('category_id', decrypt_id($category));
+            }
+
+            $data = $book->get();
 
             return DataTables::of($data)
                 ->addIndexColumn()
@@ -168,6 +176,8 @@ class DatatableController extends Controller
 
                     $processUrl = route('dashboard.book.loans.process', ['id' => encrypt_id($data->id)]);
 
+                    $returningUrl = route('dashboard.book.loans.returning', ['id' => encrypt_id($data->id)]);
+
                     $deleteUrl = route('dashboard.book.loans.destroy', ['id' => encrypt_id($data->id)]);
 
                     $dropdown = '<div class="dropdown" style="display:flex; justify-content:center;">
@@ -180,8 +190,11 @@ class DatatableController extends Controller
                             $dropdown .= '<li><a href="'.$editUrl.'"><em class="icon ni ni-edit"></em><span>Ubah</span></a></li>';
                         }
 
-                        if (is_role(['2'])) {
+                        if (is_role(['2']) && $data->status == '0') {
                             $dropdown .= '<li><a href="'.$processUrl.'"><em class="icon ni ni-loader"></em><span>Proses</span></a></li>';
+                        }
+                        if (is_role(['2']) && in_array($data->status, ['1']) && in_array($data->loan_status, ['borrowed', 'late'])) {
+                            $dropdown .= '<li><a href="'.$returningUrl.'"><em class="icon ni ni-check"></em><span>Sudah Dikembalikan</span></a></li>';
                         }
 
                         if (is_role(['2'])) {

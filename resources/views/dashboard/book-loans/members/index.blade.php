@@ -47,17 +47,7 @@
                                                                     <li><a href="#">{{$book->author}}</a></li>
                                                                 </ul>
                                                                 <h5 class="product-title"><a href="{{route('dashboard.book.categories.show', ['id' => encrypt_id($book->id)])}}">{{shorten_text($book->title, 30)}}</a></h5>
-                                                                <div class="product-price text-primary h5" style="display: flex; justify-content: center;">
-                                                                    <div style="width: 50%; margin-right: 2px;">
-                                                                        <a href="{{route('dashboard.books.borrow', ['id' => encrypt_id($book->id)])}}" class="btn {{$book->quantity_total > 0 ? 'btn-warning' : 'btn-light'}} w-100 d-flex justify-content-center">Pinjam</a>
-                                                                    </div>
-                                                                    <div style="width: 50%; margin-left: 2px;">
-                                                                        <a href="{{route('dashboard.books.show', ['id' => encrypt_id($book->id)])}}" class="btn btn-success w-100 d-flex justify-content-center">Detail</a>
-                                                                    </div>
-                                                                    <div style="width: 20%; margin-left: 2px; justify-content: end !important;">
-                                                                        <a href="{{route('dashboard.books.show', ['id' => encrypt_id($book->id)])}}" class="btn w-50 text-end"><em class="icon ni ni-heart"></em></a>
-                                                                    </div>
-                                                                </div>
+                                                                <div class="product-price text-primary h5"><small class="text-muted fs-13px">{{idn_date(get_loan($book->id, Auth::user()->id)['loan_date'], 'd F Y')}} - {{idn_date(get_loan($book->id, Auth::user()->id)['due_date'], 'd F Y')}}</small></div>
                                                             </div>
                                                         </div>
                                                     </div><!-- .col -->

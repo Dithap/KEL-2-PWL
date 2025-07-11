@@ -106,14 +106,16 @@
                                                                 @enderror
                                                             </div>
                                                         </div>
-                                                        <div class="col-sm-12 text-end mt-5">
+                                                        @if ($bookLoan->status === '0')
+                                                            <div class="col-sm-12 text-end mt-5">
                                                             <a href="javascript:void(0);" class="btn btn-success mx-1" onclick="statusAction('{{route('dashboard.book.loans.process.action', ['id' => encrypt_id($bookLoan->id), 'action' => 'accept'])}}', 'Apakah Anda yakin ingin menyetujui peminjaman buku {{$bookLoan->book->title}}?', 'Ya, Setujui')">
                                                                 Terima
                                                             </a>
                                                             <a href="javascript:void(0);" class="btn btn-danger mx-1" onclick="statusAction('{{route('dashboard.book.loans.process.action', ['id' => encrypt_id($bookLoan->id), 'action' => 'reject'])}}', 'Apakah Anda yakin ingin menolak peminjaman buku {{$bookLoan->book->title}}?', 'Ya, Setujui')">
-                                                                Terima
+                                                                Tolak
                                                             </a>
                                                         </div>
+                                                        @endif
                                                     </div>
                                                 </form>
                                             </div>

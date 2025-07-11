@@ -28,7 +28,7 @@
                 url: '{{ route('dashboard.books.data') }}',
                 type: 'GET',
                 data: function(d) {
-                    d.name = '{{ $name }}';
+                    d.category = '{{ $category }}';
                 }
             },
             columns: [

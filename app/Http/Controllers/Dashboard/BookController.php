@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\BookRequest;
 use App\Models\Book;
 use App\Models\BookCategory;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -25,7 +26,13 @@ class BookController extends Controller
         if(is_role(['2'])){
             return view('dashboard.books.index', $data);
         }else{
-            $data['books'] = Book::with(['category', 'enhancer'])->simplePaginate(12);
+            $book = Book::with(['category', 'enhancer']);
+
+            if($data['category']){
+                $book->where('category_id', decrypt_id($data['category']));
+            }
+
+            $data['books'] = $book->simplePaginate(12);
             return view('dashboard.books.members.index', $data);
         }
 
@@ -51,7 +58,7 @@ class BookController extends Controller
 
     public function show($id){
         $book = Book::with(['category', 'enhancer'])->findOrFail(decrypt_id($id));
-        $relatedBooks = Book::with(['category', 'enhancer'])->where('category_id', '=', $book->id)->take(6)->get();
+        $relatedBooks = Book::with(['category', 'enhancer'])->where('id', '!=', $book->id)->take(6)->get();
 
         $data = [
             'page_title' => 'Rincian Buku',
@@ -94,6 +101,24 @@ class BookController extends Controller
 
         $book->update($validatedData);
         return redirect()->route('dashboard.books.index')->with('success-message', 'Berhasil mengubah data buku.');
+    }
+
+    public function borrow(Request $request, $id){
+
+        $data = [
+            'page_title' => 'Tambah Peminjam Buku',
+            'page' => 'books',
+            'book' => Book::with(['category', 'enhancer'])->findOrFail(decrypt_id($id)),
+            'borrowers' => User::where('role_id', '=', '1')->get(),
+        ];
+
+        if($data['book']->quantity_total > 0){
+            // $data['book']->decrement('quantity_total');
+        }else{
+            return redirect()->back()->with('warning-message', 'Buku sedang tidak tersedia.');
+        }
+
+        return view('dashboard.books.members.borrow', $data);
     }
 
     public function destroy($id){

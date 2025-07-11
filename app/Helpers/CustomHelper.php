@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Models\BookLoan;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Vinkla\Hashids\Facades\Hashids;
@@ -129,5 +129,12 @@ if (!function_exists('idn_date')) {
     function idn_date($tanggal, $format = 'd F Y')
     {
         return Carbon::parse($tanggal)->locale('id')->translatedFormat($format);
+    }
+}
+
+if (!function_exists('get_loan')) {
+    function get_loan($idBook, $idBorrower)
+    {
+        return BookLoan::where('book_id', '=', $idBook)->where('borrower_id', '=', $idBorrower)->first();
     }
 }

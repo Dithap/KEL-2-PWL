@@ -56,3 +56,9 @@
     padding-bottom: 10px; /* Tambahkan padding bawah pada input search */
     margin-left: -0.5rem !important;
 }
+
+.book-cover {
+    width: 100%;              /* Gambar akan mengikuti lebar kontainer */
+    height: 400px;            /* Tinggi tetap */
+    object-fit: cover;
+}

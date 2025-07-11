@@ -66,6 +66,7 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
             Route::get('/', 'index')->name('index');
             Route::get('/{id}/show', 'show')->name('show');
 
+            Route::get('/{id}/borrow', 'borrow')->name('borrow');
             Route::middleware('role:2')->group(function(){
                 Route::get('/create', 'create')->name('create');
                 Route::post('/', 'store')->name('store');
@@ -94,6 +95,7 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
             Route::get('/create', 'create')->name('create');
             Route::post('/', 'store')->name('store');
 
+            Route::get('/{id}/returned', 'returning')->name('returning');
             Route::get('/{id}/edit', 'edit')->name('edit');
             Route::put('/{id}', 'update')->name('update');
 

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 class BookLoanController extends Controller
 {
     public function index(Request $request){
-        return view('dashboard.book-loans.index', [
+        $data = [
             'page_title' => 'Peminjaman Buku',
             'page' => 'book-loans',
             'name' => $request->input('name', null),
@@ -22,7 +22,20 @@ class BookLoanController extends Controller
             'author' => $request->input('author', null),
             'publisher' => $request->input('publisher', null),
             'rating' => $request->input('rating', null),
-        ]);
+        ];
+
+        if(is_role(['2'])){
+            return view('dashboard.book-loans.index', $data);
+        }else{
+            // $data['books'] = Book::with(['category', 'enhancer'])->simplePaginate(12);
+            $user = User::with('bookLoans')->find(Auth::user()->id);
+            $data['books'] = $user->bookLoans->where('loan_status', '!=', 'returned')->where('status', '=', '1')->map(function ($loan) {
+                return $loan->book;
+            });
+
+            // dd($data['books']);
+            return view('dashboard.book-loans.members.index', $data);
+        }
     }
 
     public function create(Request $request){
@@ -42,9 +55,7 @@ class BookLoanController extends Controller
             $data['book'] = $book;
             $data['isParamHaveBook'] = true;
 
-            if($book->quantity_total > 0){
-                $book->decrement('quantity_total');
-            }else{
+            if($book->quantity_total <= 0){
                 return redirect()->back()->with('warning-message', 'Buku sedang tidak tersedia.');
             }
         }
@@ -56,6 +67,9 @@ class BookLoanController extends Controller
         $validatedData = $bookLoanRequest->validated();
         $validatedData['status']  = Auth::user()->role_id == '2' ? '1' : '0';
         $validatedData['loan_status']  = Auth::user()->role_id == '2' ? 'borrowed' : 'waiting';
+
+        $book = Book::with(['category', 'enhancer'])->findOrFail($validatedData['book_id']);
+        $book->decrement('quantity_total');
 
         BookLoan::create($validatedData);
 
@@ -103,6 +117,7 @@ class BookLoanController extends Controller
 
     public function processAction(Request $request, $id, $action){
         $bookLoan = BookLoan::with(['borrower', 'book', 'enhancer'])->findOrFail(decrypt_id($id));
+        $book = Book::findOrFail($bookLoan->book_id);
 
         if(!in_array($action, ['accept', 'reject'])){
             abort(404);
@@ -121,7 +136,7 @@ class BookLoanController extends Controller
                     'loan_status' => 'borrowed'
                 ]);
 
-                $bookLoan->decrement('quantity_total', 1);
+                $book->decrement('quantity_total');
                 break;
             case 'reject':
                 $bookLoan->update([
@@ -134,6 +149,20 @@ class BookLoanController extends Controller
 
         return redirect()->route('dashboard.book.loans.index')->with('success-message', 'Berhasil memproses permohonan peminjaman buku.');
 
+    }
+
+    public function returning($id){
+        try{
+            $bookLoan = BookLoan::with(['book'])->findOrFail(decrypt_id($id));
+            $bookLoan->book->increment('quantity_total');
+            $bookLoan->update([
+                'loan_status' => 'returned'
+            ]);
+
+            return redirect()->back()->with('success-status', 'Berhasil melakukan penerimaan buku.');
+        }catch (\Exception $e) {
+            return redirect()->back()->with('failed-status', 'Gagal melakukan penerimaan buku.');
+        }
     }
 
     public function destroy($id){

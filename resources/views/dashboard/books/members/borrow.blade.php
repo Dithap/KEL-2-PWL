@@ -122,23 +122,6 @@
                                                                 </tbody>
                                                             </table>
                                                         </div>
-                                                        <div class="product-meta">
-                                                            <ul class="d-flex flex-wrap ailgn-center g-2 pt-1">
-                                                                {{-- <li class="w-140px">
-                                                                    <div class="form-control-wrap number-spinner-wrap">
-                                                                        <button class="btn btn-icon btn-outline-light number-spinner-btn number-minus" data-number="minus"><em class="icon ni ni-minus"></em></button>
-                                                                        <input type="number" class="form-control number-spinner" value="0">
-                                                                        <button class="btn btn-icon btn-outline-light number-spinner-btn number-plus" data-number="plus"><em class="icon ni ni-plus"></em></button>
-                                                                    </div>
-                                                                </li> --}}
-                                                                <li>
-                                                                    <a href="{{route('dashboard.books.borrow', ['id' => encrypt_id($book->id)])}}" class="btn btn-success">Pinjam Buku</a>
-                                                                </li>
-                                                                <li class="ms-n1">
-                                                                    <button class="btn btn-icon btn-trigger text-primary"><em class="icon ni ni-heart"></em></button>
-                                                                </li>
-                                                            </ul>
-                                                        </div><!-- .product-meta -->
                                                     </div><!-- .product-info -->
                                                 </div><!-- .col -->
                                             </div><!-- .row -->
@@ -151,45 +134,82 @@
                                                     </div>
                                                 </div><!-- .col -->
                                             </div><!-- .row -->
+                                            <hr class="hr border-light">
+                                            <div class="row g-gs flex-lg-row-reverse pt-5">
+                                                <div class="col-lg-12">
+                                                    <div class="product-details entry me-xxl-3">
+                                                        <h3 class="mb-5">Data Peminjaman</h3>
+                                                         <form action="{{route('dashboard.book.loans.store')}}" method="post" id="myForm">
+                                                            @csrf
+                                                            <div class="row gy-4">
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label required-field" for="book_id">Buku</label>
+                                                                        <div class="form-control-wrap">
+                                                                            <input type="text" class="form-control" id="book_name" name="book_name" value="{{ $book->title }}" readonly>
+                                                                            <input type="hidden" class="form-control" id="book_id" name="book_id" value="{{ encrypt_id($book->id) }}">
+                                                                        </div>
+                                                                        @error('book_id')
+                                                                            <span class="error-message">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label required-field" for="book_id">Peminjam</label>
+                                                                        <div class="form-control-wrap">
+                                                                            <input type="text" class="form-control" id="borrower" name="borrower" value="{{ Auth::user()->name }}" readonly>
+                                                                            <input type="hidden" class="form-control" id="borrower_id" name="borrower_id" value="{{ encrypt_id(Auth::user()->id) }}">
+                                                                        </div>
+                                                                        @error('borrower_id')
+                                                                            <span class="error-message">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label required-field">Tanggal Pinjam</label>
+                                                                        <div class="form-control-wrap">
+                                                                            <input type="date" class="form-control" name="loan_date" value="{{date('Y-m-d')}}" readonly>
+                                                                        </div>
+                                                                    </div>
+                                                                    @error('loan_date')
+                                                                            <span class="error-message">{{ $message }}</span>
+                                                                        @enderror
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label required-field">Tanggal Wajib Dikembalikan</label>
+                                                                        <div class="form-control-wrap">
+                                                                            <input type="date" class="form-control" name="due_date" value="{{now()->addDays(7)->format('Y-m-d')}}" readonly>
+                                                                        </div>
+                                                                    </div>
+                                                                    @error('due_date')
+                                                                            <span class="error-message">{{ $message }}</span>
+                                                                        @enderror
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="notes">Catatan</label>
+                                                                        <div class="form-control-wrap">
+                                                                            <textarea class="form-control no-resize" id="notes" name="notes">{{ old('notes') }}</textarea>
+                                                                        </div>
+                                                                        @error('notes')
+                                                                            <span class="error-message">{{ $message }}</span>
+                                                                        @enderror
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12 text-end mt-5">
+                                                                    <button type="submit" class="btn btn-md btn-primary" id="submitButton">Pinjam</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div><!-- .col -->
+                                            </div><!-- .row -->
                                         </div>
                                     </div>
                                 </div><!-- .nk-block -->
-                                <div class="nk-block nk-block-lg">
-                                    <div class="nk-block-head">
-                                        <div class="nk-block-between g-3">
-                                            <div class="nk-block-head-content">
-                                                <h3 class="nk-block-title page-title">Kamu Mungkin Ingin Membaca</h3>
-                                            </div>
-                                        </div>
-                                    </div><!-- .nk-block-head -->
-                                    <div class="slider-init row" data-slick='{"slidesToShow": 4, "centerMode": false, "slidesToScroll": 1, "infinite":false, "responsive":[ {"breakpoint": 1540,"settings":{"slidesToShow": 3}},{"breakpoint": 992,"settings":{"slidesToShow": 2}}, {"breakpoint": 576,"settings":{"slidesToShow": 1}} ]}'>
-                                        @foreach ($relatedBooks as $relatedBook)
-                                        <div class="col">
-                                            <div class="card card-bordered product-card">
-                                                <div class="product-thumb">
-                                                    <a href="{{route('dashboard.books.show', ['id' => encrypt_id($relatedBook->id)])}}">
-                                                        <img class="card-img-top book-cover" src="{{asset('storage/books/'. $relatedBook->cover_image)}}" alt="">
-                                                    </a>
-                                                    <ul class="product-badges">
-                                                        <li><span class="badge bg-success">{{$relatedBook->category->name}}</span></li>
-                                                    </ul>
-                                                    <ul class="product-actions">
-                                                        <li><a href="#"><em class="icon ni ni-cart"></em></a></li>
-                                                        <li><a href="#"><em class="icon ni ni-heart"></em></a></li>
-                                                    </ul>
-                                                </div>
-                                                <div class="card-inner text-center">
-                                                    <ul class="product-tags">
-                                                        <li><a href="#">{{$relatedBook->author}}</a></li>
-                                                    </ul>
-                                                    <h5 class="product-title"><a href="{{route('dashboard.books.show', ['id' => encrypt_id($relatedBook->id)])}}">{{shorten_text($relatedBook->title, 30)}}</a></h5>
-                                                    <div class="product-price text-primary h5"><small class="text-muted del fs-13px">$350</small> $324</div>
-                                                </div>
-                                            </div>
-                                        </div><!-- .col -->
-                                        @endforeach
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>

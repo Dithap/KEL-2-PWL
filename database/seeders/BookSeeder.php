@@ -36,7 +36,7 @@ class BookSeeder extends Seeder
                     </ul>
                     <p>Dengan gaya bahasa yang sederhana, penjelasan rinci, serta ilustrasi kode yang mudah diikuti, buku ini sangat cocok digunakan baik oleh pelajar, mahasiswa, maupun profesional yang ingin beralih ke Laravel.</p>
                     <p><strong>Bonus:</strong> Terdapat akses ke repository GitHub berisi semua source code proyek yang dibahas dalam buku.</p>',
-                'cover_image' => 'default.jpg',
+                'cover_image' => 'belajar-laravel-pemula.jpg',
                 'quantity_total' => 10,
                 'enhancer_id' => 1,
             ],
@@ -61,7 +61,7 @@ class BookSeeder extends Seeder
                     </ul>
                     <p>Each chapter includes real-world examples and code walkthroughs to help you build confidence in applying these principles. Additionally, you’ll find mini-projects at the end of each section to reinforce the concepts learned.</p>
                     <p>Whether you’re building custom CMS, complex APIs, or enterprise-grade applications, this book will equip you with the tools and mindset required for professional-grade PHP development.</p>',
-                'cover_image' => 'default.jpg',
+                'cover_image' => 'mastering-php-oop.jpg',
                 'quantity_total' => 5,
                 'enhancer_id' => 1,
             ],
@@ -92,7 +92,7 @@ class BookSeeder extends Seeder
                         <li>Memahami pentingnya integrity constraint dan indexing</li>
                     </ol>
                     <p><strong>Bonus:</strong> Dilengkapi template perancangan database dan access ke latihan interaktif berbasis web.</p>',
-                'cover_image' => 'default.jpg',
+                'cover_image' => 'database-design-fundamental.jpeg',
                 'quantity_total' => 8,
                 'enhancer_id' => 1,
             ],
