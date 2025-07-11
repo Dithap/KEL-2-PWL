@@ -9,6 +9,7 @@ use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\BookCategoryController;
 use App\Http\Controllers\Dashboard\BookController;
 use App\Http\Controllers\Dashboard\BookLoanController;
+use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\RiwayatController;
 use Illuminate\Support\Facades\Route;
@@ -21,9 +22,7 @@ Route::view('/riwayat', 'riwayat.index')->name('riwayat');
 Route::view('/ulasan', 'ulasan.index')->name('ulasan');
 Route::view('/qrcode', 'qrcode.index')->name('qrcode');
 
-Route::get('/', function () {
-    return redirect()->route('login');
-});
+Route::get('/', [HomepageController::class, 'index'])->name('homepages.index');
 
 Route::controller(AuthController::class)->group(function(){
     Route::prefix('login')->group(function(){
