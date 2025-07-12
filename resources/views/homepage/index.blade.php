@@ -1,31 +1,31 @@
 <!doctype html>
 <html class="no-js" lang="en">
     <head>
-        <title>Crafto - The Multipurpose HTML5 Template</title>
+        <title>Waska Library</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="author" content="ThemeZaa">
         <meta name="viewport" content="width=device-width,initial-scale=1.0" />
         <meta name="description" content="Elevate your online presence with Crafto - a modern, versatile, multipurpose Bootstrap 5 responsive HTML5, SCSS template using highly creative 48+ ready demos.">
         <!-- favicon icon -->
-        <link rel="shortcut icon" href="images/favicon.png">
-        <link rel="apple-touch-icon" href="images/apple-touch-icon-57x57.png">
-        <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
-        <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+        <link rel="shortcut icon" href="{{asset('assets/global/waska-library-logo-only.png')}}">
+        <link rel="apple-touch-icon" href="{{asset('assets/global/waska-library-logo-only.png')}}">
+        <link rel="apple-touch-icon" sizes="72x72" href="{{asset('assets/global/waska-library-logo-only.png')}}">
+        <link rel="apple-touch-icon" sizes="114x114" href="{{asset('assets/global/waska-library-logo-only.png')}}">
         <!-- google fonts preconnect -->
         <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <!-- style sheets and font icons  -->
-        <link rel="stylesheet" href="{{asset('assets/homepage/css/vendors.min.css')}}"/>
-        <link rel="stylesheet" href="{{asset('assets/homepage/css/icon.min.css')}}"/>
-        <link rel="stylesheet" href="{{asset('assets/homepage/css/style.css')}}"/>
-        <link rel="stylesheet" href="{{asset('assets/homepage/css/responsive.css')}}"/>
-        <link rel="stylesheet" href="{{asset('assets/homepage/demos/hosting/hosting.css')}}" />
+        <link rel="stylesheet" href="{{asset('assets/landing/css/vendors.min.css')}}"/>
+        <link rel="stylesheet" href="{{asset('assets/landing/css/icon.min.css')}}"/>
+        <link rel="stylesheet" href="{{asset('assets/landing/css/style.css')}}"/>
+        <link rel="stylesheet" href="{{asset('assets/landing/css/responsive.css')}}"/>
+        <link rel="stylesheet" href="{{asset('assets/landing/demos/hosting/hosting.css')}}" />
     </head>
     <body data-mobile-nav-style="full-screen-menu" data-mobile-nav-bg-color="">
         <!-- start header -->
         <header class="header-with-topbar">
-            {{-- <div class="header-top-bar top-bar-dark cover-background" style="background-image: url('{{asset('assets/homepage/images/demo-hosting-header-bg.jpg')}}')">
+            {{-- <div class="header-top-bar top-bar-dark cover-background" style="background-image: url('{{asset('assets/landing/images/demo-hosting-header-bg.jpg')}}')">
                 <div class="container-fluid">
                     <div class="row h-42px align-items-center m-0">
                         <div class="col-md-7 text-center text-md-start">
@@ -42,9 +42,9 @@
                 <div class="container-lg">
                     <div class="col-auto me-auto ps-lg-0">
                         <a class="navbar-brand" href="index.html">
-                            <img src="{{asset('assets/homepage/images/waska-lib-logo.png')}}" data-at2x="{{asset('assets/homepage/images/waska-lib-logo.png')}}" alt="" class="default-logo">
-                            <img src="{{asset('assets/homepage/images/waska-lib-logo.png')}}" data-at2x="{{asset('assets/homepage/images/waska-lib-logo.png')}}" alt="" class="alt-logo">
-                            <img src="{{asset('assets/homepage/images/waska-lib-logo.png')}}" data-at2x="{{asset('assets/global/waska-library-logo.png')}}" alt="" class="mobile-logo">
+                            <img src="{{asset('assets/landing/images/waska-lib-logo.png')}}" data-at2x="{{asset('assets/landing/images/waska-lib-logo.png')}}" alt="" class="default-logo">
+                            <img src="{{asset('assets/landing/images/waska-lib-logo.png')}}" data-at2x="{{asset('assets/landing/images/waska-lib-logo.png')}}" alt="" class="alt-logo">
+                            <img src="{{asset('assets/landing/images/waska-lib-logo.png')}}" data-at2x="{{asset('assets/global/waska-library-logo.png')}}" alt="" class="mobile-logo">
                         </a>
                     </div>
                     <div class="col-auto menu-order position-static">
@@ -73,7 +73,7 @@
         </header>
         <!-- end header -->
         <!-- start banner -->
-        <section class="cover-background full-screen bg-dark-gray ipad-top-space-margin position-relative section-dark md-h-auto" style="background-image: url('{{asset('assets/homepage/images/hero-library.jpg')}}')">
+        <section class="cover-background full-screen bg-dark-gray ipad-top-space-margin position-relative section-dark md-h-auto" style="background-image: url('{{asset('assets/landing/images/hero-library.jpg')}}')">
             <div id="particles-style-01" class="h-100 position-absolute left-0px top-0 w-100" data-particle="true" data-particle-options='{"particles": {"number": {"value": 12,"density": {"enable": true,"value_area": 2000}},"color": {"value": ["#ed00a8", "#ed00a8", "#ed00a8", "#ed00a8"]},"shape": {"type": "edge","stroke":{"width":0,"color":"#000000"}},"opacity": {"value": 0.8,"random": false,"anim": {"enable": false,"speed": 1,"sync": false}},"size": {"value": 5,"random": true,"anim": {"enable": false,"sync": true}},"line_linked":{"enable":false,"distance":0,"color":"#ffffff","opacity":0.4,"width":1},"move": {"enable": true,"speed":1,"direction": "right","random": false,"straight": false}},"interactivity": {"detect_on": "canvas","events": {"onhover": {"enable": false,"mode": "repulse"},"onclick": {"enable": false,"mode": "push"},"resize": true}},"retina_detect": false}'></div>
             <div class="container d-flex align-items-center justify-content-center h-100">
                 <div class="row align-items-center justify-content-center w-100">
@@ -209,8 +209,8 @@
         </div>
         <!-- end scroll progress -->
         <!-- javascript libraries -->
-        <script type="text/javascript" src="{{asset('assets/homepage/js/jquery.js')}}"></script>
-        <script type="text/javascript" src="{{asset('assets/homepage/js/vendors.min.js')}}"></script>
-        <script type="text/javascript" src="{{asset('assets/homepage/js/main.js')}}"></script>
+        <script type="text/javascript" src="{{asset('assets/landing/js/jquery.js')}}"></script>
+        <script type="text/javascript" src="{{asset('assets/landing/js/vendors.min.js')}}"></script>
+        <script type="text/javascript" src="{{asset('assets/landing/js/main.js')}}"></script>
     </body>
 </html>
